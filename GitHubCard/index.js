@@ -3,6 +3,15 @@
            https://api.github.com/users/<your name>
 */
 
+let cardsContainer = document.querySelector('.cards');
+var userData;
+
+axios
+  .get('https://api.github.com/users/dylanmestyanek')
+  .then(repo => {
+    cardsContainer.appendChild(createComponent(repo.data));
+  });
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -45,6 +54,58 @@ const followersArray = [];
 </div>
 
 */
+let profileLink = document.createElement('a');
+
+function createComponent(obj){
+  let cardContainer = document.createElement('div');
+  cardContainer.classList.add('card');
+  
+  let userImg = document.createElement('img');
+  userImg.src = `${obj.avatar_url}`;
+
+  let cardInfo = document.createElement('div');
+  cardInfo.classList.add('card-info');
+  
+  let nameHeader = document.createElement('h3');
+  nameHeader.classList.add('name');
+  nameHeader.textContent = `${obj.name}`;
+  
+  let username = document.createElement('p');
+  username.classList.add('username');
+  username.textContent = `${obj.login}`;
+  
+  let usersLocation = document.createElement('p');
+  usersLocation.textContent = `${obj.location}`;
+
+  let profileText = document.createElement('p');
+  profileText.textContent = "Profile:";
+  profileText.appendChild(profileLink);
+  
+  profileLink.href = obj.html_url;
+  profileLink.textContent = `${obj.html_url}`;
+
+  let followersText = document.createElement('p');
+  followersText.textContent = `Followers: ${obj.followers}`;
+
+  let followingText = document.createElement('p');
+  followingText.textContent = `Following: ${obj.following}`;
+
+  let userBio = document.createElement('p');
+  userBio.textContent = `Bio: ${obj.bio}`;
+
+
+  cardContainer.appendChild(userImg);
+  cardContainer.appendChild(cardInfo);
+  cardInfo.appendChild(nameHeader);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(usersLocation);
+  cardInfo.appendChild(profileText);
+  cardInfo.appendChild(followersText);
+  cardInfo.appendChild(followingText);
+  cardInfo.appendChild(userBio);
+
+  return cardContainer;
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
