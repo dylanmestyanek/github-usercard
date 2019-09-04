@@ -60,15 +60,19 @@ followersArray.forEach(follower => {
 </div>
 
 */
-let profileLink = document.createElement('a');
+
+let expandedCard = false;
 
 function createComponent(obj){
   let cardContainer = document.createElement('div');
   cardContainer.classList.add('card');
+
+  let userContainer = document.createElement('div');
+  userContainer.classList.add('userContainer');
   
   let userImg = document.createElement('img');
   userImg.src = `${obj.avatar_url}`;
-
+  
   let cardInfo = document.createElement('div');
   cardInfo.classList.add('card-info');
   
@@ -82,26 +86,44 @@ function createComponent(obj){
   
   let usersLocation = document.createElement('p');
   usersLocation.textContent = `${obj.location}`;
-
+  
   let profileText = document.createElement('p');
-  profileText.textContent = "Profile:";
+  profileText.textContent = `Profile:`;
+  
+  let profileLink = document.createElement('a');
+  profileLink.href = obj.html_url;
+  profileLink.textContent = ` ${obj.html_url}`;
   profileText.appendChild(profileLink);
   
-  profileLink.href = obj.html_url;
-  profileLink.textContent = `${obj.html_url}`;
-
   let followersText = document.createElement('p');
   followersText.textContent = `Followers: ${obj.followers}`;
-
+  
   let followingText = document.createElement('p');
   followingText.textContent = `Following: ${obj.following}`;
-
+  
   let userBio = document.createElement('p');
   userBio.textContent = `Bio: ${obj.bio}`;
 
+  let gitCalendar = document.createElement('div');
+  gitCalendar.classList.add('gitCalendar');
 
-  cardContainer.appendChild(userImg);
-  cardContainer.appendChild(cardInfo);
+  let emptyDiv = document.createElement('div');
+  emptyDiv.classList.add('emptyDiv');
+
+  let expandButton = document.createElement('button');
+  expandButton.classList.add('expandButton');
+  expandButton.textContent = 'View Git History';
+  expandButton.addEventListener('click', () => {
+    expandedCard = !expandedCard;
+    expandButton.textContent = `${!expandedCard ? 'View Git History' : 'Collapse Card'}`;
+    cardContainer.classList.toggle('cardExpanded');
+  })
+
+  cardContainer.appendChild(userContainer);
+  userContainer.appendChild(userImg);
+  userContainer.appendChild(cardInfo);
+  cardContainer.appendChild(expandButton);
+  cardContainer.appendChild(gitCalendar);
   cardInfo.appendChild(nameHeader);
   cardInfo.appendChild(username);
   cardInfo.appendChild(usersLocation);
@@ -109,9 +131,12 @@ function createComponent(obj){
   cardInfo.appendChild(followersText);
   cardInfo.appendChild(followingText);
   cardInfo.appendChild(userBio);
-
+  new GitHubCalendar(gitCalendar, `${obj.login}`);
+  
   return cardContainer;
 }
+
+
 
 /* List of LS Instructors Github username's: 
   tetondan
