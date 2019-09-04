@@ -10,7 +10,8 @@ axios
   .get('https://api.github.com/users/dylanmestyanek')
   .then(repo => {
     cardsContainer.appendChild(createComponent(repo.data));
-  });
+  })
+  .catch(err => console.log(err));
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -38,8 +39,9 @@ const followersArray = ['LandryIrakoze', 'tetondan', 'dustinmyers', 'justsml', '
 followersArray.forEach(follower => {
   axios
     .get(`https://api.github.com/users/${follower}`)
-    .then(repo => cardsContainer.appendChild(createComponent(repo.data)));
-})
+    .then(repo => cardsContainer.appendChild(createComponent(repo.data)))
+    .catch(err => console.log(err));
+  })
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
