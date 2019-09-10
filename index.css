@@ -93,12 +93,21 @@ body {
 
 .card {
   width: 100%;
+  height: 250px;
   padding: 20px;
   display: flex;
+  flex-direction: column;
   border-radius: 5px;
   box-shadow: 0 1px 6px -2px #000;
   background-color: #FFF;
   margin-bottom: 30px;
+  transition: height .6s;
+  overflow: hidden;
+}
+
+.cardExpanded {
+  height: 550px;
+  transition: all 1s;
 }
 
 .card img {
@@ -123,5 +132,33 @@ body {
   margin: 3px 0 10px;
 }
 
+.gitCalendar {
+  padding: 50px 0;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.js-calendar-graph-svg {
+  margin-left: -9%;
+  width: 120%;
+  transform: scale(.85);
+}
+
+.userContainer {
+  display: flex;
+}
+
+.expandButton {
+  width: 200px;
+  padding: 5px 10px;
+  border: none;
+  margin: 20px auto 0;
+  transition: all .2s;
+}
+
+.expandButton:hover {
+  cursor: pointer;
+  background: darkgrey;
+}
 
 
